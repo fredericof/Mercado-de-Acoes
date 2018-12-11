@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,6 +40,7 @@ public class Acao implements Serializable {
 	@JoinColumn(name = "comprador_id")
 	private Comprador comprador;
 	
+	@JsonIgnoreProperties("acoes")
 	@ManyToOne
 	@JoinColumn(name = "empresa_id")
 	private Empresa empresa;

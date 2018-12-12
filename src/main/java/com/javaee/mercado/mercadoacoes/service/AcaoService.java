@@ -42,7 +42,7 @@ public class AcaoService {
 	public Acao inserirAcaoEmpresa(Acao obj) {
 		Empresa empresa = empresaRepository.findById(obj.getEmpresa().getId()).get();
 
-		if (empresa.getAcoes().size() > empresa.getQtdAcoes()) {
+		if (empresa.getAcoes().size() >= empresa.getQtdAcoes()) {
 			return null;
 		}
 

@@ -23,14 +23,14 @@ import lombok.Setter;
 public class Comprador implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
 	private Integer id;
-	
+
 	private String nome;
-	
+
 	@JsonIgnoreProperties("comprador")
 	@OneToMany(mappedBy = "comprador")
 	private List<Acao> acoes;
@@ -40,5 +40,5 @@ public class Comprador implements Serializable {
 		this.id = id;
 		this.nome = nome;
 	}
-	
+
 }

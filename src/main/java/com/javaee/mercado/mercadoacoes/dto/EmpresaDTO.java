@@ -19,12 +19,12 @@ public class EmpresaDTO implements Serializable {
 
 	private String nome;
 
-	private Integer qtdAcoes;
+	private Integer numMaxAcoes;
 
 	public EmpresaDTO(Empresa obj) {
 		id = obj.getId();
 		nome = obj.getNome();
-		qtdAcoes = obj.getQtdAcoes();
+		numMaxAcoes = obj.getNumMaxAcoes();
 	}
 
 }

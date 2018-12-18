@@ -30,16 +30,16 @@ public class Empresa implements Serializable {
 	
 	private String nome;
 	
-	private Integer qtdAcoes;
+	private Integer numMaxAcoes;
 		
 	@OneToMany(mappedBy = "empresa")
 	private List<Acao> acoes = new ArrayList<Acao>();
 
-	public Empresa(Integer id, String nome, Integer qtdAcoes) {
+	public Empresa(Integer id, String nome, Integer numMaxAcoes) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.qtdAcoes = qtdAcoes;
+		this.numMaxAcoes = numMaxAcoes;
 	}
 	
 }

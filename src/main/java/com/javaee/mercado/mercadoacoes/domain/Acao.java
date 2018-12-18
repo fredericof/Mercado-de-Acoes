@@ -24,22 +24,23 @@ import lombok.Setter;
 public class Acao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@EqualsAndHashCode.Include
 	private Integer id;
-	
+
 	private Date dataCompra;
-	
+
 	private Double valorInicial;
-	
+
 	private Double valorAtual;
-	
+
+	@JsonIgnoreProperties("acoes")
 	@ManyToOne
 	@JoinColumn(name = "comprador_id")
 	private Comprador comprador;
-	
+
 	@JsonIgnoreProperties("acoes")
 	@ManyToOne
 	@JoinColumn(name = "empresa_id")
@@ -55,5 +56,5 @@ public class Acao implements Serializable {
 		this.comprador = comprador;
 		this.empresa = empresa;
 	}
-	
+
 }

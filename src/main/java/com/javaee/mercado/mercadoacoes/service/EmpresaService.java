@@ -29,7 +29,7 @@ public class EmpresaService {
 	}
 
 	public Empresa fromDTO(EmpresaDTO objDTO) {
-		return new Empresa(objDTO.getId(), objDTO.getNome(), objDTO.getQtdAcoes());
+		return new Empresa(objDTO.getId(), objDTO.getNome(), objDTO.getNumMaxAcoes());
 	}
 
 }

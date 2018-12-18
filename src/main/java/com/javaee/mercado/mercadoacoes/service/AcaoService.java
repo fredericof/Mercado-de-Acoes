@@ -42,11 +42,17 @@ public class AcaoService {
 	public Acao inserirAcaoEmpresa(Acao obj) {
 		Empresa empresa = empresaRepository.findById(obj.getEmpresa().getId()).get();
 
-		if (empresa.getAcoes().size() >= empresa.getQtdAcoes()) {
+		if (empresa.getAcoes().size() >= empresa.getNumMaxAcoes()) {
 			return null;
 		}
 
 		return insert(obj);
+	}
+
+	public Acao compraAcao(Integer id, AcaoDTO obj) throws ObjectNotFoundException {
+		Acao acao = find(id);
+		acao.setComprador(obj.getComprador());
+		return repo.save(acao);
 	}
 
 }

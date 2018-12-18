@@ -4,8 +4,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.javaee.mercado.mercadoacoes.domain.Comprador;
 import com.javaee.mercado.mercadoacoes.dto.CompradorDTO;
@@ -28,13 +26,6 @@ public class CompradorService {
 	public Comprador insert(Comprador obj) {
 		obj.setId(null);
 		return repo.save(obj);
-	}
-
-	@Transactional(propagation = Propagation.REQUIRED)
-	public Comprador compraAcao(Integer id, CompradorDTO obj) throws ObjectNotFoundException {
-		Comprador comprador = find(id);
-		comprador.setAcoes(obj.getAcoes());
-		return repo.save(comprador);
 	}
 
 	public Comprador fromDTO(CompradorDTO objDTO) {

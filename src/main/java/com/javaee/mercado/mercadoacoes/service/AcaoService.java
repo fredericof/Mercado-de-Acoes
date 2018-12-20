@@ -51,7 +51,23 @@ public class AcaoService {
 
 	public Acao compraAcao(Integer id, AcaoDTO obj) throws ObjectNotFoundException {
 		Acao acao = find(id);
+
+		if (acao.getComprador() != null) {
+			return null;
+		}
+
 		acao.setComprador(obj.getComprador());
+		return repo.save(acao);
+	}
+
+	public Acao vendeAcao(Integer id) throws ObjectNotFoundException {
+		Acao acao = find(id);
+
+		if (acao.getComprador() == null) {
+			return null;
+		}
+
+		acao.setComprador(null);
 		return repo.save(acao);
 	}
 

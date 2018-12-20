@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.javaee.mercado.mercadoacoes.domain.Acao;
+import com.javaee.mercado.mercadoacoes.domain.Message;
 import com.javaee.mercado.mercadoacoes.dto.AcaoDTO;
 import com.javaee.mercado.mercadoacoes.service.AcaoService;
+import com.javaee.mercado.mercadoacoes.service.MessageService;
 
 import javassist.tools.rmi.ObjectNotFoundException;
 
@@ -27,6 +29,9 @@ import javassist.tools.rmi.ObjectNotFoundException;
 public class AcaoController {
 
 	public static final String BASE_URL = "/api/v1/acoes";
+
+	@Autowired
+	private MessageService messageService;
 
 	@Autowired
 	private AcaoService service;
@@ -38,6 +43,7 @@ public class AcaoController {
 		return ResponseEntity.ok().body(obj);
 	}
 
+	@Transactional
 	@PostMapping
 	public ResponseEntity<?> insert(@RequestBody AcaoDTO objDTO) {
 		Acao obj = service.fromDTO(objDTO);
@@ -48,15 +54,43 @@ public class AcaoController {
 		}
 
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-
 		return ResponseEntity.created(uri).build();
 	}
 
 	@Transactional
-	@PutMapping({ "/{id}" })
+	@PutMapping({ "/comprar/{id}" })
 	@ResponseStatus(HttpStatus.OK)
-	public Acao compraAcao(@PathVariable Integer id, @RequestBody AcaoDTO objDTO) throws ObjectNotFoundException {
-		return service.compraAcao(id, objDTO);
+	public ResponseEntity<?> compraAcao(@PathVariable Integer id, @RequestBody AcaoDTO objDTO)
+			throws ObjectNotFoundException {
+
+		Acao obj = service.compraAcao(id, objDTO);
+
+		if (obj == null) {
+			return ResponseEntity.status(HttpStatus.OK).body("Esta ação já pertence a um comprador");
+		}
+
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build();
+	}
+
+	@Transactional
+	@PutMapping({ "/vender/{id}" })
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseEntity<?> vendeAcao(@PathVariable Integer id) throws ObjectNotFoundException {
+
+		Acao obj = service.vendeAcao(id);
+
+		if (obj == null) {
+			return ResponseEntity.status(HttpStatus.OK).body("Esta ação não pertence a um comprador");
+		}
+
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build();
+	}
+
+	public Boolean sendMessageToQueue(@RequestBody Message message) {
+		messageService.sendMessage(message);
+		return true;
 	}
 
 }

@@ -1,25 +1,19 @@
 package com.javaee.mercado.mercadoacoes;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.javaee.mercado.mercadoacoes.repositories.AcaoRepository;
-import com.javaee.mercado.mercadoacoes.repositories.CompradorRepository;
-import com.javaee.mercado.mercadoacoes.repositories.EmpresaRepository;
-
 @SpringBootApplication
 public class MercadoAcoesApplication implements CommandLineRunner {
 
-	@Autowired
-	private AcaoRepository acaoRepository;
-
-	@Autowired
-	private CompradorRepository compradorRepository;
-
-	@Autowired
-	private EmpresaRepository empresaRepository;
+	/*
+	 * @Autowired private AcaoRepository acaoRepository;
+	 * 
+	 * @Autowired private CompradorRepository compradorRepository;
+	 * 
+	 * @Autowired private EmpresaRepository empresaRepository;
+	 */
 
 	public static void main(String[] args) {
 		SpringApplication.run(MercadoAcoesApplication.class, args);
@@ -42,4 +36,5 @@ public class MercadoAcoesApplication implements CommandLineRunner {
 		 */
 
 	}
+
 }

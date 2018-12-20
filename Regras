@@ -39,12 +39,16 @@ http://localhost:8080/api/v1/compradores
     "nome": "José"
 }
 
-http://localhost:8080/api/v1/compradores/1
+http://localhost:8080/api/v1/acoes/comprar/1
 {
-	"nome": "José",
-    "acoes": [
-        {
-            "id": 1
-        }
-    ]
+    "comprador": {
+        "id": 1
+    }
+}
+
+http://localhost:8080/api/v1/acoes/vender/1
+{
+    "comprador": {
+        "id": 1
+    }
 }

@@ -22,7 +22,7 @@ Como: GitHub
 http://localhost:8080/api/v1/empresas
 {
 	"nome": "Coca Cola",
-	"qtdAcoes": 2
+	"numMaxacoes": 2
 }
 
 http://localhost:8080/api/v1/acoes

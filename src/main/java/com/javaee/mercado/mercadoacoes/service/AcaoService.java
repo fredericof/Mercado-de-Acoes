@@ -5,9 +5,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.javaee.mercado.mercadoacoes.domain.Acao;
 import com.javaee.mercado.mercadoacoes.domain.Empresa;
+import com.javaee.mercado.mercadoacoes.domain.Message;
 import com.javaee.mercado.mercadoacoes.dto.AcaoDTO;
 import com.javaee.mercado.mercadoacoes.repositories.AcaoRepository;
 import com.javaee.mercado.mercadoacoes.repositories.EmpresaRepository;
@@ -16,6 +18,9 @@ import javassist.tools.rmi.ObjectNotFoundException;
 
 @Service
 public class AcaoService {
+
+	@Autowired
+	private MessageService messageService;
 
 	@Autowired
 	private AcaoRepository repo;
@@ -49,15 +54,13 @@ public class AcaoService {
 		return insert(obj);
 	}
 
-	public Acao compraAcao(Integer id, AcaoDTO obj) throws ObjectNotFoundException {
-		Acao acao = find(id);
+	public Boolean compraAcao(Integer id, AcaoDTO obj) throws ObjectNotFoundException {
 
-		if (acao.getComprador() != null) {
-			return null;
-		}
+		Message message = new Message();
+		message.setSubject("CompraAcao");
+		message.setBody(obj.getComprador().getId() + ";" + id);
 
-		acao.setComprador(obj.getComprador());
-		return repo.save(acao);
+		return sendMessageToQueue(message);
 	}
 
 	public Acao vendeAcao(Integer id) throws ObjectNotFoundException {
@@ -69,6 +72,11 @@ public class AcaoService {
 
 		acao.setComprador(null);
 		return repo.save(acao);
+	}
+
+	public Boolean sendMessageToQueue(@RequestBody Message message) {
+		messageService.sendMessage(message);
+		return true;
 	}
 
 }

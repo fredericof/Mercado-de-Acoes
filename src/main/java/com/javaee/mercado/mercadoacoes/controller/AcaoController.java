@@ -69,13 +69,9 @@ public class AcaoController {
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<?> vendeAcao(@PathVariable Integer id) throws ObjectNotFoundException {
 
-		Acao obj = service.vendeAcao(id);
+		service.vendeAcao(id);
 
-		if (obj == null) {
-			return ResponseEntity.status(HttpStatus.OK).body("Esta ação não pertence a um comprador");
-		}
-
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 

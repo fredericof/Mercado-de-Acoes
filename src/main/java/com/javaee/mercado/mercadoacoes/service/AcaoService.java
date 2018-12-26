@@ -63,15 +63,13 @@ public class AcaoService {
 		return sendMessageToQueue(message);
 	}
 
-	public Acao vendeAcao(Integer id) throws ObjectNotFoundException {
-		Acao acao = find(id);
+	public Boolean vendeAcao(Integer id) throws ObjectNotFoundException {
 
-		if (acao.getComprador() == null) {
-			return null;
-		}
+		Message message = new Message();
+		message.setSubject("VendeAcao");
+		message.setBody(id.toString());
 
-		acao.setComprador(null);
-		return repo.save(acao);
+		return sendMessageToQueue(message);
 	}
 
 	public Boolean sendMessageToQueue(@RequestBody Message message) {

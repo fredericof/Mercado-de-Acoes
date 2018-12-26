@@ -22,7 +22,7 @@ Como: GitHub
 http://localhost:8080/api/v1/empresas
 {
 	"nome": "Coca Cola",
-	"numMaxacoes": 2
+	"numMaxAcoes": 2
 }
 
 http://localhost:8080/api/v1/acoes
@@ -39,16 +39,21 @@ http://localhost:8080/api/v1/compradores
     "nome": "José"
 }
 
-http://localhost:8080/api/v1/acoes/comprar/1
+http://localhost:8080/api/v1/acoes/comprar/{id}
 {
     "comprador": {
-        "id": 1
+        "id": {id}
     }
 }
 
-http://localhost:8080/api/v1/acoes/vender/1
+http://localhost:8080/api/v1/acoes/vender/{id}
 {
     "comprador": {
-        "id": 1
+        "id": {id}
     }
 }
+
+GET
+http://localhost:8080/api/v1/acoes/{id}
+http://localhost:8080/api/v1/empresas/{id}
+http://localhost:8080/api/v1/compradores/{id}

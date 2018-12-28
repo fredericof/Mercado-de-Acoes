@@ -24,20 +24,20 @@ public class MessageListener {
 	public void processMessage(Message message) throws ObjectNotFoundException {
 
 		switch (message.getTipoNegociacao()) {
-		case "CompraAcao":
-			logger.info("Message Received");
-			acaoService.compraAcao(message);
-			logger.info("Ação comprada");
-			break;
-
-		case "VendeAcao":
-			logger.info("Message Received");
-			acaoService.vendeAcao(message);
-			logger.info("Ação Vendida");
-			break;
-
-		default:
-			break;
+			case "CompraAcao":
+				logger.info("Message Received");
+				acaoService.compraAcao(message);
+				logger.info("Ação comprada");
+				break;
+	
+			case "VendeAcao":
+				logger.info("Message Received");
+				acaoService.vendeAcao(message);
+				logger.info("Ação Vendida");
+				break;
+	
+			default:
+				break;
 		}
 
 		logger.info("Message Received");

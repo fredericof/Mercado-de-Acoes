@@ -1,4 +1,4 @@
-/*package com.javaee.mercado.mercadoacoes.service;
+package com.javaee.mercado.mercadoacoes.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -11,11 +11,14 @@ public class MailService {
 	@Autowired
 	private JavaMailSender mailSender;
 
-	public Boolean sendMail(String text, String to, String from) {
+	private static final String EMAIL_SISTEMA = "fredericofbh@gmail.com";
+
+	public Boolean sendMail(String text, String subject, String to) {
 		SimpleMailMessage message = new SimpleMailMessage();
+		message.setSubject(subject);
 		message.setText(text);
 		message.setTo(to);
-		message.setFrom(from);
+		message.setFrom(EMAIL_SISTEMA);
 
 		try {
 			mailSender.send(message);
@@ -27,4 +30,3 @@ public class MailService {
 	}
 
 }
-*/

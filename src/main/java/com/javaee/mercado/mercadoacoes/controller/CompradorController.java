@@ -1,6 +1,7 @@
 package com.javaee.mercado.mercadoacoes.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,11 @@ public class CompradorController {
 
 	@Autowired
 	private CompradorService service;
+	
+	@GetMapping
+	public ResponseEntity<List<Comprador>> getAll() {
+		return ResponseEntity.ok().body(service.getAll());
+	}
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Comprador> find(@PathVariable Integer id) throws ObjectNotFoundException {

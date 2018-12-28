@@ -1,5 +1,6 @@
 package com.javaee.mercado.mercadoacoes.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,11 @@ public class EmpresaService {
 
 	@Autowired
 	private EmpresaRepository repo;
+	
+	public List<Empresa> getAll() {
+		List<Empresa> obj = repo.findAll();
+		return obj;
+	}
 
 	public Empresa find(Integer id) throws ObjectNotFoundException {
 		Optional<Empresa> obj = repo.findById(id);

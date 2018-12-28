@@ -20,13 +20,16 @@ public class CompradorDTO implements Serializable {
 	private Integer id;
 
 	private String nome;
+	
+	private String email;
 
 	private List<Acao> acoes = new ArrayList<Acao>();
 
-	public CompradorDTO(Integer id, String nome) {
+	public CompradorDTO(Integer id, String nome, String email) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.email = email;
 	}
 
 }

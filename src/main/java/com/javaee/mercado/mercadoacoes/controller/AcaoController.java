@@ -1,6 +1,7 @@
 package com.javaee.mercado.mercadoacoes.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,10 +32,14 @@ public class AcaoController {
 	@Autowired
 	private AcaoService service;
 
+	@GetMapping
+	public ResponseEntity<List<Acao>> getAll() {
+		return ResponseEntity.ok().body(service.getAll());
+	}
+
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Acao> find(@PathVariable Integer id) throws ObjectNotFoundException {
 		Acao obj = service.find(id);
-
 		return ResponseEntity.ok().body(obj);
 	}
 
@@ -43,11 +48,9 @@ public class AcaoController {
 	public ResponseEntity<?> insert(@RequestBody AcaoDTO objDTO) {
 		Acao obj = service.fromDTO(objDTO);
 		obj = service.inserirAcaoEmpresa(obj);
-
 		if (obj == null) {
 			return ResponseEntity.status(HttpStatus.OK).body("Não é permitido emitir mais ações");
 		}
-
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
@@ -55,25 +58,16 @@ public class AcaoController {
 	@Transactional
 	@PutMapping({ "/{idAcao}/comprador/{idComprador}/comprar" })
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<?> compraAcao(@PathVariable Integer idAcao, @PathVariable Integer idComprador)
+	public String compraAcao(@PathVariable Integer idAcao, @PathVariable Integer idComprador)
 			throws ObjectNotFoundException {
-
-		service.compraAcaoMessage(idAcao, idComprador);
-
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(idAcao).toUri();
-		return ResponseEntity.created(uri).build();
+		return service.compraAcaoMessage(idAcao, idComprador);
 	}
 
 	@Transactional
 	@PutMapping({ "/{idAcao}/valor/{valor}/vender" })
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<?> vendeAcao(@PathVariable Integer idAcao, @PathVariable Double valor)
-			throws ObjectNotFoundException {
-
-		service.vendeAcaoMessage(idAcao, valor);
-
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(idAcao).toUri();
-		return ResponseEntity.created(uri).build();
+	public String vendeAcao(@PathVariable Integer idAcao, @PathVariable Double valor) throws ObjectNotFoundException {
+		return service.vendeAcaoMessage(idAcao, valor);
 	}
 
 }

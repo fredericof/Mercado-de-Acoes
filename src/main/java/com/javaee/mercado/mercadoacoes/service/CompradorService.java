@@ -1,5 +1,6 @@
 package com.javaee.mercado.mercadoacoes.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,11 @@ public class CompradorService {
 	@Autowired
 	private CompradorRepository repo;
 
+	public List<Comprador> getAll() {
+		List<Comprador> obj = repo.findAll();
+		return obj;
+	}
+
 	public Comprador find(Integer id) throws ObjectNotFoundException {
 		Optional<Comprador> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
@@ -29,7 +35,7 @@ public class CompradorService {
 	}
 
 	public Comprador fromDTO(CompradorDTO objDTO) {
-		return new Comprador(objDTO.getId(), objDTO.getNome());
+		return new Comprador(objDTO.getId(), objDTO.getNome(), objDTO.getEmail());
 	}
 
 }

@@ -1,8 +1,8 @@
 package com.javaee.mercado.mercadoacoes.controller;
 
 import java.net.URI;
+import java.util.List;
 
-import javassist.tools.rmi.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +17,8 @@ import com.javaee.mercado.mercadoacoes.domain.Empresa;
 import com.javaee.mercado.mercadoacoes.dto.EmpresaDTO;
 import com.javaee.mercado.mercadoacoes.service.EmpresaService;
 
+import javassist.tools.rmi.ObjectNotFoundException;
+
 @RestController
 @RequestMapping(EmpresaController.BASE_URL)
 public class EmpresaController {
@@ -26,10 +28,14 @@ public class EmpresaController {
 	@Autowired
 	private EmpresaService service;
 
+	@GetMapping
+	public ResponseEntity<List<Empresa>> getAll() {
+		return ResponseEntity.ok().body(service.getAll());
+	}
+
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Empresa> find(@PathVariable Integer id) throws ObjectNotFoundException {
 		Empresa obj = service.find(id);
-
 		return ResponseEntity.ok().body(obj);
 	}
 
@@ -37,9 +43,7 @@ public class EmpresaController {
 	public ResponseEntity<Void> insert(@RequestBody EmpresaDTO objDTO) {
 		Empresa obj = service.fromDTO(objDTO);
 		obj = service.insert(obj);
-
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
-
 		return ResponseEntity.created(uri).build();
 	}
 

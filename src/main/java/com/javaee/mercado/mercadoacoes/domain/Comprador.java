@@ -30,15 +30,18 @@ public class Comprador implements Serializable {
 	private Integer id;
 
 	private String nome;
+	
+	private String email;
 
 	@JsonIgnoreProperties("comprador")
 	@OneToMany(mappedBy = "comprador")
 	private List<Acao> acoes;
 
-	public Comprador(Integer id, String nome) {
+	public Comprador(Integer id, String nome, String email) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.email = email;
 	}
 
 	public Comprador(Integer id) {

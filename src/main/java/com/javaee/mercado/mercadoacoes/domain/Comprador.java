@@ -41,4 +41,9 @@ public class Comprador implements Serializable {
 		this.nome = nome;
 	}
 
+	public Comprador(Integer id) {
+		super();
+		this.id = id;
+	}
+
 }

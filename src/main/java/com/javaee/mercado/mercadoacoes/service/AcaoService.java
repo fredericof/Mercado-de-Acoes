@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.javaee.mercado.mercadoacoes.domain.Acao;
+import com.javaee.mercado.mercadoacoes.domain.Comprador;
 import com.javaee.mercado.mercadoacoes.domain.Empresa;
 import com.javaee.mercado.mercadoacoes.domain.Message;
 import com.javaee.mercado.mercadoacoes.dto.AcaoDTO;
@@ -27,6 +28,12 @@ public class AcaoService {
 
 	@Autowired
 	private EmpresaRepository empresaRepository;
+
+	/*@Autowired
+	MailService mailService;*/
+
+	public static final String EMAIL_SISTEMA = "fredericofbh@gmail.com";
+	public static final String EMAIL = "fredericomgbh@gmail.com";
 
 	public Acao find(Integer id) throws ObjectNotFoundException {
 		Optional<Acao> obj = repo.findById(id);
@@ -54,22 +61,64 @@ public class AcaoService {
 		return insert(obj);
 	}
 
-	public Boolean compraAcao(Integer id, AcaoDTO obj) throws ObjectNotFoundException {
+	public Boolean compraAcaoMessage(Integer idAcao, Integer idComprador) throws ObjectNotFoundException {
 
 		Message message = new Message();
-		message.setSubject("CompraAcao");
-		message.setBody(obj.getComprador().getId() + ";" + id);
+		message.setTipoNegociacao("CompraAcao");
+		message.setIdComprador(idComprador.toString());
+		message.setIdAcao(idAcao.toString());
 
 		return sendMessageToQueue(message);
 	}
 
-	public Boolean vendeAcao(Integer id) throws ObjectNotFoundException {
+	public Boolean vendeAcaoMessage(Integer idAcao, Double valor) throws ObjectNotFoundException {
 
 		Message message = new Message();
-		message.setSubject("VendeAcao");
-		message.setBody(id.toString());
+		message.setTipoNegociacao("VendeAcao");
+		message.setIdAcao(idAcao.toString());
+		message.setValor(valor.toString());
 
 		return sendMessageToQueue(message);
+	}
+
+	public void compraAcao(Message message) throws NumberFormatException, ObjectNotFoundException {
+
+		/*String compradorAntigo = "";*/
+
+		Acao acao = this.find(Integer.valueOf(message.getIdAcao()));
+		/*if (acao.getComprador() != null) {
+			compradorAntigo = acao.getComprador().getNome();
+		}*/
+		acao.setComprador(new Comprador(Integer.valueOf(message.getIdComprador())));
+
+		acao = repo.save(acao);
+		/*mailService.sendMail("Ação comprada com sucesso. Vendedor: " + compradorAntigo, EMAIL, EMAIL_SISTEMA);
+
+		if (!compradorAntigo.isEmpty()) {
+			mailService.sendMail("Ação vendida com sucesso. Comprador: " + acao.getComprador().getNome(), EMAIL,
+					EMAIL_SISTEMA);
+		}*/
+
+	}
+
+	public void vendeAcao(Message message) throws NumberFormatException, ObjectNotFoundException {
+
+		StringBuilder builder = new StringBuilder();
+
+		Acao acao = this.find(Integer.valueOf(message.getIdAcao()));
+		acao.setComprador(null);
+		acao.setValorAtual(Double.valueOf(message.getValor()));
+		repo.save(acao);
+
+		builder.append(" A venda da sua ação foi registrada em nosso sistema. ");
+		builder.append(" Valor inicial: " + acao.getValorInicial());
+		builder.append(" Valor vendido: " + acao.getValorAtual());
+		builder.append(" Data registrada da venda: " + new Date());
+		
+		System.out.println(builder.toString());
+
+		/* mailService.sendMail(builder.toString(), EMAIL, EMAIL_SISTEMA); */
+
 	}
 
 	public Boolean sendMessageToQueue(@RequestBody Message message) {

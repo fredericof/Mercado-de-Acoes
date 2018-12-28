@@ -1,0 +1,59 @@
+Mercado de Ações
+
+O sistema deverá tratar da compra de ações para pessoas físicas.
+
+- Uma Empresa possui um número limitado de ações para serem vendidas;
+- As Empresas podem emitir novas ações porém não podemos diminuir o número de ações atuais;
+- Cada ação pode pertencer a somente um Comprador;
+- Uma Ação deve possuir a informação de quando foi comprada e de qual seu valor inicial e atual, juntamente das informações do seu Comprador;
+- Um Comprador pode possuir várias Ações;
+- O sistema precisa tratar de forma assíncrona a compra e venda das Ações;
+- Durante uma compra ou venda, seu Comprador antigo e o novo precisam receber um email com a informação adequada sobre a operação;
+
+Instruções para Entrega
+Data: 21/12/2018
+Como: GitHub
+- Instruções para executar o código e testar as funcionalidades;
+- Lista de bibliotecas utilizadas e suas funções;
+- Individual;
+- Plágio será zerado;
+
+
+http://localhost:8080/api/v1/empresas
+{
+	"nome": "Coca Cola",
+	"numMaxAcoes": 2
+}
+
+http://localhost:8080/api/v1/acoes
+{
+	"valorInicial": 54.69,
+	"valorAtual": 77,
+	"empresa": {
+		"id": 1
+	}
+}
+
+http://localhost:8080/api/v1/compradores
+{
+    "nome": "José"
+}
+
+http://localhost:8080/api/v1/acoes/comprar/{id}
+{
+    "comprador": {
+        "id": {id}
+    }
+}
+
+http://localhost:8080/api/v1/acoes/vender/{id}
+{
+    "comprador": {
+        "id": {id}
+    }
+}
+
+GET
+http://localhost:8080/api/v1/acoes/{id}
+http://localhost:8080/api/v1/empresas/{id}
+http://localhost:8080/api/v1/compradores/{id}

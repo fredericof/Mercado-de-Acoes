@@ -1,4 +1,4 @@
-package com.javaee.mercado.mercadoacoes.service;
+/*package com.javaee.mercado.mercadoacoes.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -27,3 +27,4 @@ public class MailService {
 	}
 
 }
+*/

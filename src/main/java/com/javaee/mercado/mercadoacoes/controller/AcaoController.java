@@ -53,25 +53,26 @@ public class AcaoController {
 	}
 
 	@Transactional
-	@PutMapping({ "/comprar/{id}" })
+	@PutMapping({ "/{idAcao}/comprador/{idComprador}/comprar" })
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<?> compraAcao(@PathVariable Integer id, @RequestBody AcaoDTO objDTO)
+	public ResponseEntity<?> compraAcao(@PathVariable Integer idAcao, @PathVariable Integer idComprador)
 			throws ObjectNotFoundException {
 
-		service.compraAcao(id, objDTO);
+		service.compraAcaoMessage(idAcao, idComprador);
 
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(idAcao).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 
 	@Transactional
-	@PutMapping({ "/vender/{id}" })
+	@PutMapping({ "/{idAcao}/valor/{valor}/vender" })
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseEntity<?> vendeAcao(@PathVariable Integer id) throws ObjectNotFoundException {
+	public ResponseEntity<?> vendeAcao(@PathVariable Integer idAcao, @PathVariable Double valor)
+			throws ObjectNotFoundException {
 
-		service.vendeAcao(id);
+		service.vendeAcaoMessage(idAcao, valor);
 
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(idAcao).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 

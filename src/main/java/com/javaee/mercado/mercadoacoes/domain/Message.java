@@ -11,7 +11,9 @@ public class Message implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String subject;
-	private String body;
+	private String idComprador;
+	private String idAcao;
+	private String tipoNegociacao;
+	private String valor;
 
 }

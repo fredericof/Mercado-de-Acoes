@@ -7,15 +7,18 @@
    * [Utilização](#utilização)
       * [Empresa](#empresa)
         * [Cadastrar Empresa](#cadastrar-empresa)
-        * [Consultar Empresa](#consultar-empresa)
+        * [Consultar Empresa por Id](#consultar-empresa-id)
+        * [Consultar lista de Empresas](#consultar-empresas)
       * [Ação](#ação)
         * [Cadastrar Ação](#cadastrar-ação)
-        * [Consultar Ação](#consultar-ação)
+        * [Consultar Ação por Id](#consultar-ação-id)
+        * [Consultar lista de Ações](#consultar-ações)
         * [Comprar Ação](#comprar-ação)
         * [Vender Ação](#vender-ação)
       * [Comprador](#comprador)
         * [Cadastrar Comprador](#cadastrar-comprador)
-        * [Consultar Comprador](#consultar-comprador)
+        * [Consultar Comprador por Id](#consultar-comprador-id)
+        * [Consultar lista de Compradores](#consultar-compradores) 
    * [Tecnologias](#tecnologias)
 
 Descrição
@@ -42,7 +45,8 @@ Empresa
 Os recursos do Controller Empresa realiza duas operações:
 
 1. Cadastrar Empresa
-2. Consultar Empresa
+2. Consultar Empresa por Id
+3. Consultar lista de Empresas
 
 ### Cadastrar Empresa
 
@@ -59,11 +63,18 @@ Body:
 }
 ```
 
-### Consultar Empresa
+### Consultar Empresa por Id
 
 | ENDPOINT                    | PARAMETROS         | TIPO          |
 | -----------------------     | ---------------    | ------------- |
-| /api/v1/empresas/{id}       | id = id da empresa | GET           |
+| /api/v1/empresas/{id}       | id = id da Empresa | GET           |
+
+### Consultar lista de Empresas
+
+| ENDPOINT                    | PARAMETROS         | TIPO          |
+| -----------------------     | ---------------    | ------------- |
+| /api/v1/empresas            |                    | GET           |
+
 
 Ação
 --------
@@ -71,9 +82,10 @@ Ação
 Os recursos do Controller Ação realiza quatro operações:
 
 1. Cadastrar Ação
-2. Consultar Ação
-3. Comprar Ação
-4. Vender Ação
+2. Consultar Ação por Id
+3. Consultar lista de Ações
+4. Comprar Ação
+5. Vender Ação
 
 ### Cadastrar Ação
 
@@ -93,33 +105,31 @@ Body:
 }
 ```
 
-### Consultar Ação
+### Consultar Ação por Id
 
 | ENDPOINT                                      | PARAMETROS       | TIPO          |
 | ----------------------                        | -------------    | ------------- |
 | /api/v1/acoes/{id}                            | id = id da Ação  | GET           |
 
+### Consultar Lista de Ações
+
+| ENDPOINT                                      | PARAMETROS       | TIPO          |
+| ----------------------                        | -------------    | ------------- |
+| /api/v1/acoes                                 |                  | GET           |
+
 ### Comprar Ação
 
-| ENDPOINT                                             | PARAMETROS       | TIPO          |
-| -----------------------------                        | -------------    | ------------- |
-| /api/v1/acoes/comprar/{id}                           | id = id da Ação  | UPDATE        |
+| ENDPOINT                                                    | PARAMETROS                                                | TIPO          |
+| ----------------------------------------------------------  | --------------------------------------------------------  | ------------- |
+| /api/v1/acoes/{idAcao}/comprador/{idComprador}/comprar      | idAcao = id da Ação; idComprador = id do Comprador        | UPDATE        |
 
-Body:
-
-```
-{
-    "comprador": {
-        "id": 1
-    }
-}
-```
+Body: Sem corpo
 
 ### Vender Ação
 
-| ENDPOINT                                             | PARAMETROS       | TIPO          |
-| -----------------------------                        | -------------    | ------------- |
-| /api/v1/acoes/vender/{id}                            | id = id da Ação  | UPDATE        |
+| ENDPOINT                                                    | PARAMETROS                                                | TIPO          |
+| ----------------------------------------------------------  | --------------------------------------------------------  | ------------- |
+| /api/v1/acoes/{idAcao}/valor/{valor}/vender                 | idAcao = id da Ação; valor = valor de compra da ação      | UPDATE        |
 
 Body: Sem corpo
 
@@ -129,7 +139,8 @@ Comprador
 Os recursos do Controller Comprador realiza duas operações:
 
 1. Cadastrar Comprador
-2. Consultar Comprador
+2. Consultar Comprador por Id
+3. Consultar lista de Compradores
 
 ### Cadastrar Comprador
 
@@ -141,15 +152,22 @@ Body:
 
 ```
 {
-    "nome": "José"
+    "nome": "José",
+    "email": "teste@teste.com.br"
 }
 ```
 
-### Consultar Comprador
+### Consultar Comprador por Id
 
 | ENDPOINT                       | PARAMETROS              | TIPO          |
 | --------------------------     | --------------------    | ------------- |
 | /api/v1/compradores/{id}       | id = id do Comprador    | GET           |
+
+### Consultar lista de Compradores
+
+| ENDPOINT                       | PARAMETROS              | TIPO          |
+| --------------------------     | --------------------    | ------------- |
+| /api/v1/compradores            |                         | GET           |
 
 Tecnologias
 ========
